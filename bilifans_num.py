@@ -4,6 +4,10 @@ import time
 api="http://api.bilibili.com/x/relation/stat?vmid="
 uid=str(sys.argv[1])
 api=api+uid
+filename=str(uid)+".txt"
+os.system("echo a>"+filename)
+os.system("del "+filename)
+os.system("echo start>"+filename)
 
 ######################获取粉丝数
 up2=requests.get(api)
@@ -31,4 +35,10 @@ while (1):
         bl="减少了"+str(oldfans-nowfans)+"个粉丝"
     p=p+bl
     print(p)
-    time.sleep(1)
+    os.system("rename "+filename+" "+filename+"1")
+    with open(filename,'a') as f: # 输出到文件
+        f.write(p+"\n")
+        f.close()
+    os.system("type "+filename+"1>>"+filename)
+    os.system("del "+filename+"1")
+    time.sleep(10)
